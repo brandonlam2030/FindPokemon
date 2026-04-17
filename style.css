@@ -40,13 +40,13 @@ body {
 
 #card-container {
   display: grid;
-  margin:1.5em;
+  margin: 1.5em;
   gap: 20px;
-  width: calc(100% - 4em); 
-  grid-template-columns: repeat(4, 1fr); 
+  width: calc(100% - 3em);
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   grid-template-rows: auto;
-  position:relative;
-  z-index:1;
+  position: relative;
+  z-index: 1;
 }
 
 .card {
@@ -56,8 +56,21 @@ body {
   flex-direction: column; 
   align-items: center;
   padding: 10px;
-  border-radius:10px;
+  border-radius: 10px;
+  transform: scale(1);
+  max-height: 225px; 
+  overflow: hidden;
+  transition: box-shadow .2s ease, transform .2s ease, max-height .4s ease;
 }
+
+.card:hover {
+  box-shadow: 
+    0 0 15px rgb(255, 251, 141),
+    0 0 40px rgba(255, 252, 172, 0.5); 
+  transform: scale(1.01);
+  max-height: 600px; 
+}
+
 
 .card-content {
   padding: 20px;
@@ -97,7 +110,7 @@ body {
   justify-content:center;
   background:rgb(32, 32, 32);
   height:60%;
-  width:10%;
+  width:20%;
 }
 
 
@@ -145,11 +158,12 @@ body {
   left: 0;
   width: 100%;
   z-index: 2;   
-  background:rgb(102, 102, 102);
-  display:none;
-  grid-template-columns: repeat(4, 1fr); 
+  background: rgb(225, 225, 225);
+  display: none;
+  grid-template-columns: repeat(3, 1fr); 
   grid-template-rows: auto;
-  padding:25px;
+  padding: 25px;
+  justify-items: center; 
 }
 
 
@@ -192,3 +206,18 @@ body {
   gap:20px;
 }
 
+.elements, .generation, .misc{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  font-size:large;
+}
+
+
+.stats {
+  width: 100%;
+  margin-top: 10px; /* space between type badges and stats */
+  background: white;
+  padding: 10px;
+  border-radius: 5px;
+}

@@ -18,14 +18,75 @@
     </header>
     <div class = "filter">
       <input type = "text" class = "search-box" placeholder = "Search">
-      <button>Search</button>
-      <button><img src = "assets/filter-solid.png" style = "height:100%; width:30%; background:transparent"/>Filters</button>
+      <button class = "hover-button"><img src = "assets/filter-solid.png" style = "height:100%; width:30%; background:transparent"/>Filters</button>
+      <div class="filter-options">
+        <div class = "generation">
+          <h2>Type</h2>
+          <ul>
+            <li><input type = "checkbox">Generation 1</li>
+            <li><input type = "checkbox">Generation 2</li>
+            <li><input type = "checkbox">Generation 3</li>
+            <li><input type = "checkbox">Generation 4</li>
+            <li><input type = "checkbox">Generation 5</li>
+            <li><input type = "checkbox">Generation 6</li>
+            <li><input type = "checkbox">Generation 7</li>
+            <li><input type = "checkbox">Generation 8</li>
+            <li><input type = "checkbox">Generation 9</li>
+          </ul>
+        </div>
+        <div class = "elements">
+          <h2>Type</h2>
+          <div class = "wrapper">
+            <ul>
+              <li><input type = "checkbox">normal</li>
+              <li><input type = "checkbox">fire</li>
+              <li><input type = "checkbox">water</li>
+              <li><input type = "checkbox">grass</li>
+              <li><input type = "checkbox">electric</li>
+              <li><input type = "checkbox">ice</li>
+              <li><input type = "checkbox">fighting</li>
+              <li><input type = "checkbox">poison</li>
+              <li><input type = "checkbox">ground</li>
+              <li><input type = "checkbox">flying</li>
+            </ul>
+            <ul>
+              <li><input type = "checkbox">psychic</li>
+              <li><input type = "checkbox">bug</li>
+              <li><input type = "checkbox">rock</li>
+              <li><input type = "checkbox">dragon</li>
+              <li><input type = "checkbox">ghost</li>
+              <li><input type = "checkbox">dark</li>
+              <li><input type = "checkbox">steel</li>
+              <li><input type = "checkbox">fairy</li>
+            </ul>
+          </div>
+        </div>
+        <div class = "misc">
+          <h2>Type</h2>
+          <ul>
+            <li><input type = "checkbox"></li>
+            <li><input type = "checkbox"></li>
+            <li><input type = "checkbox"></li>
+            <li><input type = "checkbox"></li>
+            <li><input type = "checkbox"></li>
+          </ul>
+        </div>
+      </div>
     </div>
+    
     <div id="card-container"></div>
     <div class="card" style="display: none">
       <div class="card-content">
-        <h2>TV Show Title</h2>
+        <h2></h2>
         <img src="" alt="TV Show Poster" />
+        <div class = "type">
+          <div class="type1">
+            <h2></h2>
+          </div>
+          <div class="type2">
+            <h2></h2>
+          </div>
+        </div>
       </div>
     </div>
     <button onclick = showCards() class = "load"><p>Load More</p></button>

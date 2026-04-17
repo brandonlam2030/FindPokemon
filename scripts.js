@@ -62,8 +62,6 @@ const frame = [
   fairy: "#EE99AC"
 };
 
-
-
 //loads all pokemon data
 async function loadCSVData() {
   const response = await fetch("pokemon.csv")
@@ -83,36 +81,17 @@ async function loadCSVData() {
 }
 
 
-
-//handles pokemon card loading
-var offset = 1;
-async function showCards() {
-  await loadCSVData();
-  const cardContainer = document.getElementById("card-container");
-
-  const templateCard = document.querySelector(".card");
-
-  for (let i = 0; i < 28; i++) {
-    let target = pokemon[offset++];
-
-
-    const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, target.name, target.pokedex_number, [target.type1, target.type2]); // Edit title and image
-    cardContainer.appendChild(nextCard); // Add new card to the container
-  }
-}
-
-
-
-
 //edits existing card template
 function editCardContent(card, newTitle, newImageURL, elements) {
   card.style.display = "flex";
 
   const cardHeader = card.querySelector("h2");
   cardHeader.textContent = newTitle;
-
+  card.classList.add(newTitle.toLowerCase());
   const cardImage = card.querySelector("img");
+
+
+  
   cardImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${newImageURL.trim()}.png`;
   cardImage.alt = newTitle + " Poster";
 
@@ -122,6 +101,7 @@ function editCardContent(card, newTitle, newImageURL, elements) {
   type1Text.textContent = elements[0];
   type1.style.background = typeColors[elements[0]];
 
+
   const type2 = card.querySelector(".type2");
   if (elements[1] && typeColors[elements[1]]) {
     const type2Text = card.querySelector(".type2 h2");
@@ -130,8 +110,6 @@ function editCardContent(card, newTitle, newImageURL, elements) {
   } else {
     type2.style.display = "none";
   }
-
-  console.log("new card:", newTitle, "- html: ", card);
 }
 
 
@@ -150,7 +128,49 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+const searchBar = document.querySelector(".filter .search-box");
+//on each input in the search bar, reset my search index to 1, clear all cards, and filter to show only what is searched
+searchBar.addEventListener("input", () => {
+  filterIndex = 1;
+  document.getElementById("card-container").innerHTML = "";
+  filter();
+});
+
+
+var filterIndex = 1;
+function filter() {
+  const value = searchBar.value.toLowerCase();
+  var filter = [];
+
+  while(filter.length < 24 && filterIndex < pokemon.length-1) {
+    if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
+      filter.push(pokemon[filterIndex]);
+    }
+    filterIndex++;
+  }
+  const cardContainer = document.getElementById("card-container");
+
+  const templateCard = document.querySelector(".card");
+  
+  filter.forEach((obj) => {
+    const nextCard = templateCard.cloneNode(true); // Copy the template card
+    editCardContent(nextCard, obj.name, obj.pokedex_number, [obj.type1, obj.type2]); // Edit title and image
+    cardContainer.appendChild(nextCard); // Add new card to the container
+  })
+}
 
 
 
 
+//loads pokemon.csv data then calls intial card setup
+async function showCards() {
+  if (pokemon.length == 0) {
+    await loadCSVData();
+  }
+  filter();
+}
+
+
+function detail() {
+  document.querySelector()
+}

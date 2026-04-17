@@ -4,7 +4,6 @@
     <title>Shop Pokemon</title>
     <meta name="description" content="A Pokemon E-Commerce Website" />
     <link rel="stylesheet" href="style.css" />
-    <script type="text/javascript" src="scripts.js"></script>
     <link rel="icon" type="image/png" href="assets/Favicon.png" />
   </head>
 
@@ -17,11 +16,11 @@
       </nav>
     </header>
     <div class = "filter">
-      <input type = "text" class = "search-box" placeholder = "Search">
+      <input type = "text" class = "search-box" id = "search-bar" placeholder = "Search">
       <button class = "hover-button"><img src = "assets/filter-solid.png" style = "height:100%; width:30%; background:transparent"/>Filters</button>
       <div class="filter-options">
         <div class = "generation">
-          <h2>Type</h2>
+          <h2>Generation</h2>
           <ul>
             <li><input type = "checkbox">Generation 1</li>
             <li><input type = "checkbox">Generation 2</li>
@@ -62,7 +61,7 @@
           </div>
         </div>
         <div class = "misc">
-          <h2>Type</h2>
+          <h2>Misc</h2>
           <ul>
             <li><input type = "checkbox"></li>
             <li><input type = "checkbox"></li>
@@ -78,7 +77,7 @@
     <div class="card" style="display: none">
       <div class="card-content">
         <h2></h2>
-        <img src="" alt="TV Show Poster" />
+        <img src="" alt="TV Show Poster">
         <div class = "type">
           <div class="type1">
             <h2></h2>
@@ -87,8 +86,16 @@
             <h2></h2>
           </div>
         </div>
+        <div class="stats">
+          <div class="attack">1</div>
+          <div class="defense">2</div>
+          <div class="spattack">3</div>
+          <div class="spdefense">4</div>
+          <div class="speed">5</div>
+        </div>
       </div>
     </div>
-    <button onclick = showCards() class = "load"><p>Load More</p></button>
+    <button onclick = "filter()" class = "load"><p>Load More</p></button>
+    <script type="text/javascript" src="scripts.js"></script>
   </body>
 </html>

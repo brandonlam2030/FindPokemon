@@ -2,69 +2,128 @@ html,
 body {
   margin: 0;
   padding: 0;
+  overflow-x:hidden;
 }
 
-.main-header {
-  background-color: rgba(0, 0, 0, 0.3);
-  padding-bottom: 10px;
+*{
+    box-sizing: border-box;
+    margin:0;
+    padding:0;
+    background:rgb(17, 17, 17);
+    
 }
 
-.title {
-  text-align: center;
-  margin: 0;
-  font-size: 8em;
-  font-family: "Helvetica";
-  font-weight: normal;
-  color: white;
+.navbar {
+  padding-top:20px;
+  display:flex;
+  justify-content:center;
+  height:7vh;
+  width:100vw;
+  gap:1em;
+}
+
+.navbar p {
+  font-size:x-large;
+  display:flex;
+  align-items:center;
+  height:100%;
+  width:10%;
+  justify-content:center;
+  color:white;
+  border-radius:20px;
+}
+
+.navbar p:hover {
+  background:rgb(32, 32, 32);
 }
 
 #card-container {
-  display: flex;
-  justify-content: center;
-  margin: 20px;
+  display: grid;
+  margin:1.5em;
+  gap: 20px;
+  width: calc(100% - 4em); 
+  grid-template-columns: repeat(4, 1fr); 
+  grid-template-rows: auto;
 }
 
 .card {
-  width: 300px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  margin: 5px;
+  width: 100%; 
+  border: rgb(129, 129, 129) solid 3px;
+  display: flex;
+  flex-direction: column; 
+  align-items: center;
+  padding: 10px;
+  border-radius:10px;
 }
 
 .card-content {
   padding: 20px;
   font-family: "Verdana";
-  color: #777;
-}
-
-.card-content h2 {
-  margin-top: 0;
-  font-size: 20px;
+  color: #ffffff;
+  width: 100%;
 }
 
 .card img {
-  width: 100%;
+  width: 60%;       
+  max-width: 150px;
   height: auto;
+  display: block;
+  margin: 0 auto;   
 }
 
-.footer {
-  display: flex;
-  justify-content: center;
-  background-color: rgba(0, 0, 0, 0.3);
-  padding: 10px;
+.load {
+  height:75px;
+  width:100%;
+  display:flex;
+  background:transparent;
+  justify-content:center;
+  align-items:center;
+  color:white;
+  font-size:xx-large;
+  border:none;
+  border-radius:25px;
 }
 
-button {
-  text-align: center;
-  background-color: #666;
-  border: none;
-  padding-left: 10px;
-  padding-right: 10px;
-  height: 40px;
-  border-radius: 10px;
-  color: white;
-  font-size: 22px;
-  cursor: pointer;
-  margin: 5px;
+.load p {
+  border-radius:15px;
 }
+
+.load p:hover {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:rgb(32, 32, 32);
+  height:60%;
+  width:10%;
+}
+
+
+.filter {
+  height: 5vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+
+.search-box {
+  background:white;
+  border:none;
+  height:60%;
+  width:25%;
+  border-top-left-radius:5px;
+  border-bottom-left-radius:5px;
+  padding:0 .5em 0 .5em;
+}
+
+.filter button {
+  border:none;
+  background:rgb(126, 126, 126);
+  color:white;
+  height:60%;
+  width:5%;
+  border-top-right-radius:5px;
+  border-bottom-right-radius:5px;
+  margin-right:2%;
+}
+

@@ -1,4 +1,6 @@
-var pokemon = []
+var pokemon = [] //stores all pokemon data
+
+//stores keys for pokemon object creation
 const frame = [
   "against_bug",
   "against_dark",
@@ -41,6 +43,7 @@ const frame = [
   "generation",
   "is_legendary"]
 
+//stores pokemon element colorings
   const typeColors = {
   normal: "#A8A878",
   fire: "#F08030",
@@ -62,6 +65,7 @@ const frame = [
   fairy: "#EE99AC"
 };
 
+//stores hover backgrounds by element
 const typeBackgrounds = {
   "normal": "#D4D4BC",
   "fire": "#F8C098",
@@ -83,7 +87,12 @@ const typeBackgrounds = {
   "fairy": "#F8CCD8"
 }
 
-//loads all pokemon data
+
+
+
+
+
+//loads all pokemon data and creates a hashmap for each entry
 async function loadCSVData() {
   const response = await fetch("pokemon.csv")
   const text = await response.text();
@@ -102,27 +111,33 @@ async function loadCSVData() {
 }
 
 
-//edits existing card template
+
+
+
+
+
+//edits existing card template with: title, image, pokemon typing design, hover design, stat box design
 function editCardContent(card, obj) {
   card.style.display = "flex";
-
   const cardHeader = card.querySelector("h2");
   cardHeader.textContent = obj.name;
   card.classList.add(obj.name.toLowerCase());
   const cardImage = card.querySelector("img");
 
 
-  
+  //set image
   cardImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${obj.pokedex_number.trim()}.png`;
   cardImage.alt = obj.name + " Poster";
 
 
+  //set type1 theme
   const type1Text = card.querySelector(".type1 h2");
   const type1 = card.querySelector(".type1");
   type1Text.textContent = obj.type1;
   type1.style.background = typeColors[obj.type1];
 
 
+  //set type2 theme if given
   const type2 = card.querySelector(".type2");
   if (obj.type2 && typeColors[obj.type2]) {
     const type2Text = card.querySelector(".type2 h2");
@@ -133,6 +148,7 @@ function editCardContent(card, obj) {
   }
 
 
+  //on hover, box will grow and reveal overflowed data about pokemon
   card.addEventListener("mouseenter", () => {
     card.classList.add("expand");
     card.style.background = typeBackgrounds[obj.type1];
@@ -143,6 +159,8 @@ function editCardContent(card, obj) {
     card.style.background = "none";
   });
 
+
+  //creating stat boxes according to actual data
   const atk = card.querySelector(".atk");
   const def = card.querySelector(".def");
   const spatk = card.querySelector(".spatk");
@@ -159,10 +177,14 @@ function editCardContent(card, obj) {
 
 
 
-//loads intial set of cards on website launch
+
+
+
+//loads intial set of cards on website launch, and creates filter listening logic
 document.addEventListener("DOMContentLoaded", () => {
   showCards();
 
+  //on hover, show filter box else hide
   const filter = document.querySelector(".hover-button");
   const option = document.querySelector('.filter-options')
 
@@ -177,8 +199,11 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
+
+
 const searchBar = document.querySelector(".filter .search-box");
-//on each input in the search bar, reset my search index to 1, clear all cards, and filter to show only what is searched
+//on each input in the search bar, reset search index to 1, clear all cards, and filter to show only what is searched
 searchBar.addEventListener("input", () => {
   filterIndex = 1;
   document.getElementById("card-container").innerHTML = "";
@@ -188,22 +213,24 @@ searchBar.addEventListener("input", () => {
 
 
 
+
+
+//query pokemon objects based on provided filters (search bar or checkbox)
 var filterIndex = 1;
 var reqs = [];
 function filter() {
-  const value = searchBar.value.toLowerCase();
+  const value = searchBar.value.toLowerCase(); //search bar
+  var filter = []; //stored results after filter
+  
 
-  var filter = [];
-  console.log(reqs);
   while(filter.length < 24 && filterIndex < pokemon.length-1) {
-    if (value) {
+    if (value) { //if using searchbar
       if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
         filter.push(pokemon[filterIndex]);
       }  
     } else if (reqs) {
       var valid = true;
       for(const el of reqs) {
-        console.log(el === pokemon[filterIndex].generation);
         if (pokemon[filterIndex].generation !== el && pokemon[filterIndex].type1.toLowerCase() !== el && pokemon[filterIndex].type2.toLowerCase() !== el) {
           valid = false;
           break;
@@ -232,7 +259,9 @@ function filter() {
   })
 }
 
-//loads pokemon.csv data then calls intial card setup
+
+
+//calls function to load pokemon.csv data then runs intial card setup
 async function showCards() {
   if (pokemon.length == 0) {
     await loadCSVData();
@@ -241,14 +270,15 @@ async function showCards() {
 }
 
 
+
+
+//listener for checkbox input
 const checkbox = document.querySelectorAll("input[type = checkbox]");
-
-
 checkbox.forEach((box) => {
   box.addEventListener("change", () => {
     filterIndex = 1;
     document.getElementById("card-container").innerHTML = "";
-    reqs = Array.from(checkbox).filter(i => i.checked).map(i=>i.value);
+    reqs = Array.from(checkbox).filter(i => i.checked).map(i=>i.value); //take selected input and retrieve value
     filter();
   })
 })

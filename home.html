@@ -21,47 +21,48 @@
       <div class="filter-options">
         <div class = "generation">
           <h2>Generation</h2>
+          <hr>
           <ul>
-            <li><input type = "checkbox">Generation 1</li>
-            <li><input type = "checkbox">Generation 2</li>
-            <li><input type = "checkbox">Generation 3</li>
-            <li><input type = "checkbox">Generation 4</li>
-            <li><input type = "checkbox">Generation 5</li>
-            <li><input type = "checkbox">Generation 6</li>
-            <li><input type = "checkbox">Generation 7</li>
-            <li><input type = "checkbox">Generation 8</li>
-            <li><input type = "checkbox">Generation 9</li>
+            <li><input type = "checkbox" name = "generation" value = "1">Generation 1</li>
+            <li><input type = "checkbox" name = "generation" value = "2">Generation 2</li>
+            <li><input type = "checkbox" name = "generation" value = "3">Generation 3</li>
+            <li><input type = "checkbox" name = "generation" value = "4">Generation 4</li>
+            <li><input type = "checkbox" name = "generation" value = "5">Generation 5</li>
+            <li><input type = "checkbox" name = "generation" value = "6">Generation 6</li>
+            <li><input type = "checkbox" name = "generation" value = "7">Generation 7</li>
           </ul>
         </div>
         <div class = "elements">
           <h2>Type</h2>
+          <hr>
           <div class = "wrapper">
             <ul>
-              <li><input type = "checkbox">normal</li>
-              <li><input type = "checkbox">fire</li>
-              <li><input type = "checkbox">water</li>
-              <li><input type = "checkbox">grass</li>
-              <li><input type = "checkbox">electric</li>
-              <li><input type = "checkbox">ice</li>
-              <li><input type = "checkbox">fighting</li>
-              <li><input type = "checkbox">poison</li>
-              <li><input type = "checkbox">ground</li>
-              <li><input type = "checkbox">flying</li>
+              <li><input type = "checkbox" name = "type" value = "normal">normal</li>
+              <li><input type = "checkbox" name = "type" value = "fire">fire</li>
+              <li><input type = "checkbox" name = "type" value = "water">water</li>
+              <li><input type = "checkbox" name = "type" value = "grass">grass</li>
+              <li><input type = "checkbox" name = "type" value = "electric">electric</li>
+              <li><input type = "checkbox" name = "type" value = "ice">ice</li>
+              <li><input type = "checkbox" name = "type" value = "fighting">fighting</li>
+              <li><input type = "checkbox" name = "type" value = "poison">poison</li>
+              <li><input type = "checkbox" name = "type" value = "ground">ground</li>
+              <li><input type = "checkbox" name = "type" value = "flying">flying</li>
             </ul>
             <ul>
-              <li><input type = "checkbox">psychic</li>
-              <li><input type = "checkbox">bug</li>
-              <li><input type = "checkbox">rock</li>
-              <li><input type = "checkbox">dragon</li>
-              <li><input type = "checkbox">ghost</li>
-              <li><input type = "checkbox">dark</li>
-              <li><input type = "checkbox">steel</li>
-              <li><input type = "checkbox">fairy</li>
+              <li><input type = "checkbox" name = "type" value = "psychic">psychic</li>
+              <li><input type = "checkbox" name = "type" value = "bug">bug</li>
+              <li><input type = "checkbox" name = "type" value = "rock">rock</li>
+              <li><input type = "checkbox" name = "type" value = "dragon">dragon</li>
+              <li><input type = "checkbox" name = "type" value = "ghost">ghost</li>
+              <li><input type = "checkbox" name = "type" value = "dark">dark</li>
+              <li><input type = "checkbox" name = "type" value = "steel">steel</li>
+              <li><input type = "checkbox" name = "type" value = "fairy">fairy</li>
             </ul>
           </div>
         </div>
         <div class = "misc">
           <h2>Misc</h2>
+          <hr>
           <ul>
             <li><input type = "checkbox"></li>
             <li><input type = "checkbox"></li>
@@ -72,7 +73,6 @@
         </div>
       </div>
     </div>
-    
     <div id="card-container"></div>
     <div class="card" style="display: none">
       <div class="card-content">
@@ -87,11 +87,26 @@
           </div>
         </div>
         <div class="stats">
-          <div class="attack">1</div>
-          <div class="defense">2</div>
-          <div class="spattack">3</div>
-          <div class="spdefense">4</div>
-          <div class="speed">5</div>
+          <div class="stat-box">
+            <h2>ATK</h2>
+            <div class = "atk"></div>
+          </div>
+          <div class="stat-box">
+            <h2>DEF</h2>
+            <div class = "def"></div>
+          </div>
+          <div class="stat-box">
+            <h2>Sp.ATK</h2>
+            <div class = "spatk"></div>
+          </div>
+          <div class="stat-box">
+            <h2>Sp.DEF</h2>
+            <div class = "spdef"></div>
+          </div>
+          <div class="stat-box">
+            <h2>SPD</h2>
+            <div class = "spd"></div>
+          </div>
         </div>
       </div>
     </div>

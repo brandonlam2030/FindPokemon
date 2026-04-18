@@ -62,6 +62,27 @@ const frame = [
   fairy: "#EE99AC"
 };
 
+const typeBackgrounds = {
+  "normal": "#D4D4BC",
+  "fire": "#F8C098",
+  "water": "#B4C8F8",
+  "electric": "#FCE898",
+  "grass": "#BCE4A8",
+  "ice": "#CCECEC",
+  "fighting": "#E09898",
+  "poison": "#D0A0D0",
+  "ground": "#F0E0B4",
+  "flying": "#D4C8F8",
+  "psychic": "#FCACC4",
+  "bug": "#D4DC90",
+  "rock": "#DCD09C",
+  "ghost": "#B8ACC4",
+  "dragon": "#B8A0FC",
+  "dark": "#B8ACAC",
+  "steel": "#DCDCE8",
+  "fairy": "#F8CCD8"
+}
+
 //loads all pokemon data
 async function loadCSVData() {
   const response = await fetch("pokemon.csv")
@@ -82,34 +103,58 @@ async function loadCSVData() {
 
 
 //edits existing card template
-function editCardContent(card, newTitle, newImageURL, elements) {
+function editCardContent(card, obj) {
   card.style.display = "flex";
 
   const cardHeader = card.querySelector("h2");
-  cardHeader.textContent = newTitle;
-  card.classList.add(newTitle.toLowerCase());
+  cardHeader.textContent = obj.name;
+  card.classList.add(obj.name.toLowerCase());
   const cardImage = card.querySelector("img");
 
 
   
-  cardImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${newImageURL.trim()}.png`;
-  cardImage.alt = newTitle + " Poster";
+  cardImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${obj.pokedex_number.trim()}.png`;
+  cardImage.alt = obj.name + " Poster";
 
 
   const type1Text = card.querySelector(".type1 h2");
   const type1 = card.querySelector(".type1");
-  type1Text.textContent = elements[0];
-  type1.style.background = typeColors[elements[0]];
+  type1Text.textContent = obj.type1;
+  type1.style.background = typeColors[obj.type1];
 
 
   const type2 = card.querySelector(".type2");
-  if (elements[1] && typeColors[elements[1]]) {
+  if (obj.type2 && typeColors[obj.type2]) {
     const type2Text = card.querySelector(".type2 h2");
-    type2Text.textContent = elements[1];
-    type2.style.background = typeColors[elements[1]];
+    type2Text.textContent = obj.type2;
+    type2.style.background = typeColors[obj.type2];
   } else {
     type2.style.display = "none";
   }
+
+
+  card.addEventListener("mouseenter", () => {
+    card.classList.add("expand");
+    card.style.background = typeBackgrounds[obj.type1];
+  });
+
+  card.addEventListener("mouseleave", () => {
+    card.classList.remove("expand");
+    card.style.background = "none";
+  });
+
+  const atk = card.querySelector(".atk");
+  const def = card.querySelector(".def");
+  const spatk = card.querySelector(".spatk");
+  const spdef = card.querySelector(".spdef");
+  const spd = card.querySelector(".spd");
+
+  console.log(obj.name, obj.attack,obj.defense,obj.sp_attack,obj.sp_defense,obj.speed)
+  atk.style.backgroundImage = `linear-gradient(to right, rgb(255,98,98) ${Math.trunc(Number(obj.attack)/185*100)}%, white ${Math.trunc(Number(obj.attack)/185*100)}%)`;
+  def.style.backgroundImage = `linear-gradient(to right, rgb(98, 140, 255) ${Math.trunc(Number(obj.defense)/230*100)}%, white ${Math.trunc(Number(obj.defense)/230*100)}%)`;
+  spatk.style.backgroundImage = `linear-gradient(to right, rgb(184, 98, 255) ${Math.trunc(Number(obj.sp_attack)/194*100)}%, white ${Math.trunc(Number(obj.sp_attack)/194*100)}%)`;
+  spdef.style.backgroundImage = `linear-gradient(to right, rgb(159, 255, 247) ${Math.trunc(Number(obj.sp_defense)/230*100)}%, white ${Math.trunc(Number(obj.sp_defense)/230*100)}%)`;
+  spd.style.backgroundImage = `linear-gradient(to right, rgb(255, 98, 216) ${Math.trunc(Number(obj.speed)/200*100)}%, white ${Math.trunc(Number(obj.speed)/200*100)}%)`;
 }
 
 
@@ -121,8 +166,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const filter = document.querySelector(".hover-button");
   const option = document.querySelector('.filter-options')
 
-  filter.addEventListener("click", () => {
-    option.style.display = (option.style.display == "none" ? "grid" : "none");
+  filter.addEventListener("mouseenter", () => {
+    option.style.display = "flex";
+  })
+
+  option.addEventListener("mouseleave", () => {
+    option.style.display = "none";
   })
  
 });
@@ -137,14 +186,33 @@ searchBar.addEventListener("input", () => {
 });
 
 
+
+
 var filterIndex = 1;
+var reqs = [];
 function filter() {
   const value = searchBar.value.toLowerCase();
-  var filter = [];
 
+  var filter = [];
+  console.log(reqs);
   while(filter.length < 24 && filterIndex < pokemon.length-1) {
-    if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
-      filter.push(pokemon[filterIndex]);
+    if (value) {
+      if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
+        filter.push(pokemon[filterIndex]);
+      }  
+    } else if (reqs) {
+      var valid = true;
+      for(const el of reqs) {
+        console.log(el === pokemon[filterIndex].generation);
+        if (pokemon[filterIndex].generation !== el && pokemon[filterIndex].type1.toLowerCase() !== el && pokemon[filterIndex].type2.toLowerCase() !== el) {
+          valid = false;
+          break;
+        }
+      }
+      
+      if (valid) {
+        filter.push(pokemon[filterIndex]);
+      }
     }
     filterIndex++;
   }
@@ -153,14 +221,16 @@ function filter() {
   const templateCard = document.querySelector(".card");
   
   filter.forEach((obj) => {
+    console.log("created")
+    const wrapper = document.createElement("div");
+    wrapper.classList.add("card-wrapper");
+
     const nextCard = templateCard.cloneNode(true); // Copy the template card
-    editCardContent(nextCard, obj.name, obj.pokedex_number, [obj.type1, obj.type2]); // Edit title and image
-    cardContainer.appendChild(nextCard); // Add new card to the container
+    editCardContent(nextCard, obj); // Edit title and image
+    wrapper.appendChild(nextCard);
+    cardContainer.appendChild(wrapper);
   })
 }
-
-
-
 
 //loads pokemon.csv data then calls intial card setup
 async function showCards() {
@@ -171,6 +241,15 @@ async function showCards() {
 }
 
 
-function detail() {
-  document.querySelector()
-}
+const checkbox = document.querySelectorAll("input[type = checkbox]");
+
+
+checkbox.forEach((box) => {
+  box.addEventListener("change", () => {
+    filterIndex = 1;
+    document.getElementById("card-container").innerHTML = "";
+    reqs = Array.from(checkbox).filter(i => i.checked).map(i=>i.value);
+    filter();
+  })
+})
+

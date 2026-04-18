@@ -121,7 +121,7 @@ function editCardContent(card, obj) {
   card.style.display = "flex";
   const cardHeader = card.querySelector("h2");
   cardHeader.textContent = obj.name;
-  card.classList.add(obj.name.toLowerCase());
+  card.classList.add(obj.name.toLowerCase().replace(/ +/g, ""));
   const cardImage = card.querySelector("img");
 
 
@@ -139,7 +139,9 @@ function editCardContent(card, obj) {
 
   //set type2 theme if given
   const type2 = card.querySelector(".type2");
-  if (obj.type2 && typeColors[obj.type2]) {
+ 
+  if (obj.type2 && typeColors[obj.type2].trim()) {
+    type2.style.display = "flex";
     const type2Text = card.querySelector(".type2 h2");
     type2Text.textContent = obj.type2;
     type2.style.background = typeColors[obj.type2];
@@ -167,7 +169,6 @@ function editCardContent(card, obj) {
   const spdef = card.querySelector(".spdef");
   const spd = card.querySelector(".spd");
 
-  console.log(obj.name, obj.attack,obj.defense,obj.sp_attack,obj.sp_defense,obj.speed)
   atk.style.backgroundImage = `linear-gradient(to right, rgb(255,98,98) ${Math.trunc(Number(obj.attack)/185*100)}%, white ${Math.trunc(Number(obj.attack)/185*100)}%)`;
   def.style.backgroundImage = `linear-gradient(to right, rgb(98, 140, 255) ${Math.trunc(Number(obj.defense)/230*100)}%, white ${Math.trunc(Number(obj.defense)/230*100)}%)`;
   spatk.style.backgroundImage = `linear-gradient(to right, rgb(184, 98, 255) ${Math.trunc(Number(obj.sp_attack)/194*100)}%, white ${Math.trunc(Number(obj.sp_attack)/194*100)}%)`;
@@ -180,7 +181,7 @@ function editCardContent(card, obj) {
 
 
 
-//loads intial set of cards on website launch, and creates filter listening logic
+//loads intial set of cards on website launch, and creates filter .listening logic
 document.addEventListener("DOMContentLoaded", () => {
   showCards();
 
@@ -222,33 +223,39 @@ function filter() {
   const value = searchBar.value.toLowerCase(); //search bar
   var filter = []; //stored results after filter
   
-
+  console.log(reqs);
   while(filter.length < 24 && filterIndex < pokemon.length-1) {
     if (value) { //if using searchbar
       if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
         filter.push(pokemon[filterIndex]);
       }  
-    } else if (reqs) {
+    } else if (reqs.length > 0) {
       var valid = true;
-      for(const el of reqs) {
-        if (pokemon[filterIndex].generation !== el && pokemon[filterIndex].type1.toLowerCase() !== el && pokemon[filterIndex].type2.toLowerCase() !== el) {
+      for(var i = 0; i < reqs.length;i++) {
+        const [key,val] = reqs[i];
+        console.log(key);
+        if (pokemon[filterIndex].type1 !== val && pokemon[filterIndex].type2 !== val && pokemon[filterIndex][key] !== val) {
           valid = false;
           break;
         }
       }
       
       if (valid) {
+        console.log(filter);
         filter.push(pokemon[filterIndex]);
       }
+    } else {
+      filter.push(pokemon[filterIndex]);
     }
     filterIndex++;
   }
+
+
   const cardContainer = document.getElementById("card-container");
 
   const templateCard = document.querySelector(".card");
   
   filter.forEach((obj) => {
-    console.log("created")
     const wrapper = document.createElement("div");
     wrapper.classList.add("card-wrapper");
 
@@ -278,7 +285,7 @@ checkbox.forEach((box) => {
   box.addEventListener("change", () => {
     filterIndex = 1;
     document.getElementById("card-container").innerHTML = "";
-    reqs = Array.from(checkbox).filter(i => i.checked).map(i=>i.value); //take selected input and retrieve value
+    reqs = Array.from(checkbox).filter(i => i.checked).map(i=>[i.name,i.value]); //take selected input and retrieve value
     filter();
   })
 })

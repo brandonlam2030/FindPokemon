@@ -26,20 +26,24 @@ body {
   align-items: center;
   height: 7vh;
   width: 100vw;
+  margin:20px 0;
+
 }
 
 
 
 
-.heading p {
-  font-size: clamp(0.8rem, 1.5vw, 1.2rem);
+.heading h1 {
+  font-size: clamp(3rem, 4.1vw, 5rem);
   display: flex;
   align-items: center;
   height: 100%;
   width: clamp(80px, 30%, 150px);
   justify-content: center;
-  color: white;
+  color: rgb(255, 203, 5);
   border-radius: 20px;
+  -webkit-text-stroke: 3px rgb(41, 91, 189);
+  margin-left:20px;
 }
 
 .navbar p:hover {
@@ -197,14 +201,46 @@ body {
   left: 0;
   width: 100%;
   z-index: 2;
-  background: rgb(255, 255, 255);
+  background: rgb(189, 189, 189);
   display: none;
+  flex-direction:column;
   align-items:flex-start;
-  gap:200px;
   justify-items: center;
-  padding:30px 100px; 
+  gap:30px;
 }
 
+.upper {
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  gap:200px;
+  padding:30px 100px;
+  width:100%;
+}
+
+.lower {
+  border-top:solid 2px rgb(172, 172, 172);
+  display:flex;
+  justify-content: space-between;
+  width:100%;
+  height:clamp(50px, 60px, 120px);
+  align-items:center;
+  position:relative;
+  padding:20px;
+}
+
+#clear {
+  position:absolute;
+  right:0;
+  width:clamp(5%, 20%, 40%);
+  height:clamp(60%, 70%, 75%);
+}
+
+
+.lower h3 { 
+  left:47%;
+  position:absolute;
+}
 
 .filter-options button {
   height: 32px;

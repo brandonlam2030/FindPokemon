@@ -216,7 +216,7 @@ searchBar.addEventListener("input", () => {
 
 
 
-//query pokemon objects based on provided filters (search bar or checkbox)
+//query pokemon objects based on provided filters (search bar or button)
 var filterIndex = 1;
 var reqs = [];
 function filter() {
@@ -233,7 +233,6 @@ function filter() {
       var valid = true;
       for(var i = 0; i < reqs.length;i++) {
         const [key,val] = reqs[i];
-        console.log(key);
         if (pokemon[filterIndex].type1 !== val && pokemon[filterIndex].type2 !== val && pokemon[filterIndex][key] !== val) {
           valid = false;
           break;
@@ -241,7 +240,6 @@ function filter() {
       }
       
       if (valid) {
-        console.log(filter);
         filter.push(pokemon[filterIndex]);
       }
     } else {
@@ -278,15 +276,29 @@ async function showCards() {
 
 
 
-
-//listener for checkbox input
-const checkbox = document.querySelectorAll("input[type = checkbox]");
-checkbox.forEach((box) => {
-  box.addEventListener("change", () => {
+//button listener; toggles active on/off and adds to required filter
+const chip = document.querySelectorAll(".chip")
+chip.forEach((button) => {
+  button.addEventListener("click", () => {
+    button.classList.toggle("active");
     filterIndex = 1;
     document.getElementById("card-container").innerHTML = "";
-    reqs = Array.from(checkbox).filter(i => i.checked).map(i=>[i.name,i.value]); //take selected input and retrieve value
+    if (button.classList.contains("active")) {
+      if (button.dataset.name != "generation" && button.dataset.name != "misc") {
+        document.querySelector(`.${button.dataset.value}`).style.background = typeBackgrounds[button.dataset.value];
+      } 
+      reqs.push([button.dataset.name,button.dataset.value]);
+    } else {
+      if (button.dataset.name != "generation" && button.dataset.name != "misc") {
+        document.querySelector(`.${button.dataset.value}`).style.background = "rgb(50, 50, 50)";
+      }
+      for(var i = 0 ; i < reqs.length; i++) {
+        if (reqs[i][0] == button.dataset.name) {
+          reqs.pop(i);
+          break;
+        }
+      }
+    }
     filter();
   })
 })
-

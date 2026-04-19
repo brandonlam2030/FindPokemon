@@ -10,65 +10,66 @@
   <body>
     <header class="main-header">
       <nav class = "navbar">
-        <p>Home</p>
-        <p>Placeholder 1</p>
-        <p>Placeholder 2</p>
+        <div class="heading">
+          <p>Home</p>
+          <p>Placeholder 1</p>
+          <p>Placeholder 2</p>
+        </div>
+        <div class="contact">
+          <a target = "_blank" href = "https://github.com/brandonlam2030/FindPokemon"><img src = "assets/github_logo.png" style="height: 50px; width:50px;"></a>
+        </div>
       </nav>
     </header>
     <div class = "filter">
       <input type = "text" class = "search-box" id = "search-bar" placeholder = "Search">
       <button class = "hover-button"><img src = "assets/filter-solid.png" style = "height:100%; width:30%; background:transparent"/>Filters</button>
       <div class="filter-options">
-        <div class = "generation">
+        <div class="generation">
           <h2>Generation</h2>
           <hr>
           <ul>
-            <li><input type = "checkbox" name = "generation" value = "1">Generation 1</li>
-            <li><input type = "checkbox" name = "generation" value = "2">Generation 2</li>
-            <li><input type = "checkbox" name = "generation" value = "3">Generation 3</li>
-            <li><input type = "checkbox" name = "generation" value = "4">Generation 4</li>
-            <li><input type = "checkbox" name = "generation" value = "5">Generation 5</li>
-            <li><input type = "checkbox" name = "generation" value = "6">Generation 6</li>
-            <li><input type = "checkbox" name = "generation" value = "7">Generation 7</li>
+            <li><button class="chip" data-name="generation" data-value="1">Generation 1</button></li>
+            <li><button class="chip" data-name="generation" data-value="2">Generation 2</button></li>
+            <li><button class="chip" data-name="generation" data-value="3">Generation 3</button></li>
+            <li><button class="chip" data-name="generation" data-value="4">Generation 4</button></li>
+            <li><button class="chip" data-name="generation" data-value="5">Generation 5</button></li>
+            <li><button class="chip" data-name="generation" data-value="6">Generation 6</button></li>
+            <li><button class="chip" data-name="generation" data-value="7">Generation 7</button></li>
           </ul>
         </div>
-        <div class = "elements">
+        <div class="elements">
           <h2>Type</h2>
           <hr>
-          <div class = "wrapper">
+          <div class="wrapper">
             <ul>
-              <li><input type = "checkbox" name = "type" value = "normal">normal</li>
-              <li><input type = "checkbox" name = "type" value = "fire">fire</li>
-              <li><input type = "checkbox" name = "type" value = "water">water</li>
-              <li><input type = "checkbox" name = "type" value = "grass">grass</li>
-              <li><input type = "checkbox" name = "type" value = "electric">electric</li>
-              <li><input type = "checkbox" name = "type" value = "ice">ice</li>
-              <li><input type = "checkbox" name = "type" value = "fighting">fighting</li>
-              <li><input type = "checkbox" name = "type" value = "poison">poison</li>
-              <li><input type = "checkbox" name = "type" value = "ground">ground</li>
-              <li><input type = "checkbox" name = "type" value = "flying">flying</li>
+              <li><button class="chip normal" data-name="type" data-value="normal">normal</button></li>
+              <li><button class="chip fire" data-name="type" data-value="fire">fire</button></li>
+              <li><button class="chip water" data-name="type" data-value="water">water</button></li>
+              <li><button class="chip grass" data-name="type" data-value="grass">grass</button></li>
+              <li><button class="chip electric" data-name="type" data-value="electric">electric</button></li>
+              <li><button class="chip ice" data-name="type" data-value="ice">ice</button></li>
+              <li><button class="chip fighting" data-name="type" data-value="fighting">fighting</button></li>
+              <li><button class="chip poison" data-name="type" data-value="poison">poison</button></li>
+              <li><button class="chip ground" data-name="type" data-value="ground">ground</button></li>
+              <li><button class="chip flying" data-name="type" data-value="flying">flying</button></li>
             </ul>
             <ul>
-              <li><input type = "checkbox" name = "type" value = "psychic">psychic</li>
-              <li><input type = "checkbox" name = "type" value = "bug">bug</li>
-              <li><input type = "checkbox" name = "type" value = "rock">rock</li>
-              <li><input type = "checkbox" name = "type" value = "dragon">dragon</li>
-              <li><input type = "checkbox" name = "type" value = "ghost">ghost</li>
-              <li><input type = "checkbox" name = "type" value = "dark">dark</li>
-              <li><input type = "checkbox" name = "type" value = "steel">steel</li>
-              <li><input type = "checkbox" name = "type" value = "fairy">fairy</li>
+              <li><button class="chip psychic" data-name="type" data-value="psychic">psychic</button></li>
+              <li><button class="chip bug" data-name="type" data-value="bug">bug</button></li>
+              <li><button class="chip rock" data-name="type" data-value="rock">rock</button></li>
+              <li><button class="chip dragon" data-name="type" data-value="dragon">dragon</button></li>
+              <li><button class="chip ghost" data-name="type" data-value="ghost">ghost</button></li>
+              <li><button class="chip dark" data-name="type" data-value="dark">dark</button></li>
+              <li><button class="chip steel" data-name="type" data-value="steel">steel</button></li>
+              <li><button class="chip fairy" data-name="type" data-value="fairy">fairy</button></li>
             </ul>
           </div>
         </div>
-        <div class = "misc">
+        <div class="misc">
           <h2>Misc</h2>
           <hr>
           <ul>
-            <li><input type = "checkbox" name = "is_legendary" value = "1">Legendary</li>
-            <li><input type = "checkbox"></li>
-            <li><input type = "checkbox"></li>
-            <li><input type = "checkbox"></li>
-            <li><input type = "checkbox"></li>
+            <li><button class="chip is_legendary" data-name="is_legendary" data-value="1">Legendary</button></li>
           </ul>
         </div>
       </div>

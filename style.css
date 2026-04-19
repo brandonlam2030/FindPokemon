@@ -3,11 +3,14 @@ body {
   margin: 0;
   padding: 0;
   overflow-x: hidden;
-  background: rgb(17, 17, 17);
+  background: #111111;
   display:flex;
   justify-content:center;
   align-items:center;
   flex-direction:column;
+  ::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 * {
@@ -17,20 +20,23 @@ body {
 }
 
 .navbar {
-  padding-top: 20px;
+  position: relative;
   display: flex;
   justify-content: center;
+  align-items: center;
   height: 7vh;
   width: 100vw;
-  gap: 1em;
 }
 
-.navbar p {
+
+
+
+.heading p {
   font-size: clamp(0.8rem, 1.5vw, 1.2rem);
   display: flex;
   align-items: center;
   height: 100%;
-  width: clamp(80px, 10%, 150px);
+  width: clamp(80px, 30%, 150px);
   justify-content: center;
   color: white;
   border-radius: 20px;
@@ -39,6 +45,26 @@ body {
 .navbar p:hover {
   background: rgb(32, 32, 32);
 }
+
+
+
+.heading {
+ display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width:100%;
+}
+
+.contact { 
+  position: absolute;
+  right: 30px;
+  top: 70%;
+  transform: translateY(-50%);
+}
+
+
+
 
 #card-container {
   display: grid;
@@ -50,7 +76,7 @@ body {
   position: relative;
   z-index: 1;
   align-items: start;
-  min-height:50vh;
+  min-height:70vh;
 }
 
 .card-wrapper {
@@ -148,7 +174,7 @@ body {
   background: rgb(75, 75, 75);
   color: white;
   height: 60%;
-  width: clamp(40px, 5%, 80px);
+  width: clamp(80px, 5%, 120px);
   border-radius: 5px;
   margin-right: 2%;
   display: flex;
@@ -162,6 +188,9 @@ body {
   background: rgb(105, 105, 105);
 }
 
+
+
+
 .filter-options {
   position: absolute;
   top: 100%;
@@ -173,7 +202,33 @@ body {
   align-items:flex-start;
   gap:200px;
   justify-items: center;
-  padding:30px 100px;
+  padding:30px 100px; 
+}
+
+
+.filter-options button {
+  height: 32px;
+  padding: 0 12px;
+  width: 100%;
+  background: rgb(50, 50, 50);
+  color: white;
+  border: 1px solid rgb(100, 100, 100);
+  border-radius: 99px;
+  font-size: clamp(0.8rem, 1vw, 0.95rem);
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width:200px;
+}
+
+.filter-options button:hover {
+  background: rgb(80, 80, 80);
+}
+
+.filter-options button.active {
+  background-color:white;
+  color:black;
 }
 
 .type {

@@ -152,6 +152,7 @@ function editCardContent(card, obj) {
 
   //on hover, box will grow and reveal overflowed data about pokemon
   card.addEventListener("mouseenter", () => {
+    card.querySelector(".shop a").setAttribute("href", `https://www.tcgplayer.com/search/all/product?q=${obj.name.toLowerCase()}+&view=grid`)
     card.classList.add("expand");
     card.style.background = typeBackgrounds[obj.type1];
   });
@@ -225,7 +226,7 @@ function filter() {
   const count = document.getElementById("filter-count");
   count.innerText = `${reqs.length} filters active`;
 
-  
+
   while(filter.length < 24 && filterIndex < pokemon.length-1) {
     if (value) { //if using searchbar
       if (pokemon[filterIndex].name.toLowerCase().includes(value)) {

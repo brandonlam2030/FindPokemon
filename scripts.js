@@ -222,8 +222,10 @@ var reqs = [];
 function filter() {
   const value = searchBar.value.toLowerCase(); //search bar
   var filter = []; //stored results after filter
+  const count = document.getElementById("filter-count");
+  count.innerText = `${reqs.length} filters active`;
+
   
-  console.log(reqs);
   while(filter.length < 24 && filterIndex < pokemon.length-1) {
     if (value) { //if using searchbar
       if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
@@ -284,21 +286,45 @@ chip.forEach((button) => {
     filterIndex = 1;
     document.getElementById("card-container").innerHTML = "";
     if (button.classList.contains("active")) {
-      if (button.dataset.name != "generation" && button.dataset.name != "misc") {
+
+      if (button.dataset.name != "generation" && button.dataset.name != "is_legendary") {
         document.querySelector(`.${button.dataset.value}`).style.background = typeBackgrounds[button.dataset.value];
       } 
       reqs.push([button.dataset.name,button.dataset.value]);
+      console.log(reqs);
     } else {
-      if (button.dataset.name != "generation" && button.dataset.name != "misc") {
+
+      if (button.dataset.name != "generation" && button.dataset.name != "is_legendary") {
         document.querySelector(`.${button.dataset.value}`).style.background = "rgb(50, 50, 50)";
       }
+
       for(var i = 0 ; i < reqs.length; i++) {
-        if (reqs[i][0] == button.dataset.name) {
-          reqs.pop(i);
+        console.log(reqs[i][0]=== button.dataset.name, reqs[i][1]=== button.dataset.value);
+        if ((reqs[i][0] === button.dataset.name) && (reqs[i][1] === button.dataset.value)) {
+          console.log(reqs[i]);
+          reqs.splice(i,1);
           break;
         }
       }
+
+
     }
     filter();
   })
 })
+
+
+function clearFilters() {
+  reqs = [];
+  chip.forEach((button) => {
+    if (button.classList.contains("active")) {
+      button.classList.toggle("active");
+    }
+    if (button.dataset.name != "generation" && button.dataset.name != "is_legendary") {
+      document.querySelector(`.${button.dataset.value}`).style.background = "rgb(50, 50, 50)";
+    }
+  })
+  document.getElementById("card-container").innerHTML = "";
+  filterIndex = 1;
+  filter();
+}

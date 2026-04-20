@@ -116,7 +116,7 @@ async function loadCSVData() {
 
 
 
-//edits existing card template with: title, image, pokemon typing design, hover design, stat box design
+//edits existing card template with: title, image, pokemon typing design, hover design, stat box design and shopping hyperlink
 function editCardContent(card, obj) {
   card.style.display = "flex";
   const cardHeader = card.querySelector("h2");
@@ -315,6 +315,7 @@ chip.forEach((button) => {
 })
 
 
+//clears required filteres in search
 function clearFilters() {
   reqs = [];
   chip.forEach((button) => {

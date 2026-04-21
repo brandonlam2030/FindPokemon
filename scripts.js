@@ -1,5 +1,6 @@
 var pokemon = [] //stores all pokemon data
 
+
 //stores keys for pokemon object creation
 const frame = [
   "against_bug",
@@ -43,6 +44,7 @@ const frame = [
   "generation",
   "is_legendary"]
 
+
 //stores pokemon element colorings
   const typeColors = {
   normal: "#A8A878",
@@ -64,6 +66,7 @@ const frame = [
   steel: "#B8B8D0",
   fairy: "#EE99AC"
 };
+
 
 //stores hover backgrounds by element
 const typeBackgrounds = {
@@ -92,15 +95,23 @@ const typeBackgrounds = {
 
 
 
+
+
+
+
+
+
 //loads all pokemon data and creates a hashmap for each entry
 async function loadCSVData() {
   const response = await fetch("pokemon.csv")
   const text = await response.text();
 
+
   let data = text.split("\n");
   data.forEach((obj) => {
     obj = obj.slice(obj.search("]")+3);
     const attributes = (obj.split(","));
+
 
     let zipped = {}
     for(let i = 0 ; i < attributes.length; i++) {
@@ -116,6 +127,14 @@ async function loadCSVData() {
 
 
 
+
+
+
+
+
+
+
+
 //edits existing card template with: title, image, pokemon typing design, hover design, stat box design and shopping hyperlink
 function editCardContent(card, obj) {
   card.style.display = "flex";
@@ -123,11 +142,16 @@ function editCardContent(card, obj) {
   cardHeader.textContent = obj.name;
   card.classList.add(obj.name.toLowerCase().replace(/ +/g, ""));
   const cardImage = card.querySelector("img");
+  card.querySelector("h3").textContent = `#${obj.pokedex_number}`;
+
+
 
 
   //set image
   cardImage.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${obj.pokedex_number.trim()}.png`;
   cardImage.alt = obj.name + " Poster";
+
+
 
 
   //set type1 theme
@@ -152,15 +176,25 @@ function editCardContent(card, obj) {
 
   //on hover, box will grow and reveal overflowed data about pokemon
   card.addEventListener("mouseenter", () => {
-    card.querySelector(".shop a").setAttribute("href", `https://www.tcgplayer.com/search/all/product?q=${obj.name.toLowerCase()}+&view=grid`)
+    card.querySelector(".shop a").setAttribute("href", `https://www.tcgplayer.com/search/all/product?q=${obj.name.toLowerCase()}+&view=grid`);
+    card.querySelector(".shop a").innerText = `Shop ${obj.name} Cards`;
     card.classList.add("expand");
     card.style.background = typeBackgrounds[obj.type1];
   });
 
+
   card.addEventListener("mouseleave", () => {
     card.classList.remove("expand");
     card.style.background = "none";
+
+    card.style.zIndex = "10";
+    card.style.zIndex = "10"; // stay on top during collapse
+    setTimeout(() => {
+      card.style.zIndex = ""; // reset after transition finishes
+    }, 400);
   });
+
+
 
 
   //creating stat boxes according to actual data
@@ -170,12 +204,19 @@ function editCardContent(card, obj) {
   const spdef = card.querySelector(".spdef");
   const spd = card.querySelector(".spd");
 
+
   atk.style.backgroundImage = `linear-gradient(to right, rgb(255,98,98) ${Math.trunc(Number(obj.attack)/185*100)}%, white ${Math.trunc(Number(obj.attack)/185*100)}%)`;
   def.style.backgroundImage = `linear-gradient(to right, rgb(98, 140, 255) ${Math.trunc(Number(obj.defense)/230*100)}%, white ${Math.trunc(Number(obj.defense)/230*100)}%)`;
   spatk.style.backgroundImage = `linear-gradient(to right, rgb(184, 98, 255) ${Math.trunc(Number(obj.sp_attack)/194*100)}%, white ${Math.trunc(Number(obj.sp_attack)/194*100)}%)`;
   spdef.style.backgroundImage = `linear-gradient(to right, rgb(159, 255, 247) ${Math.trunc(Number(obj.sp_defense)/230*100)}%, white ${Math.trunc(Number(obj.sp_defense)/230*100)}%)`;
   spd.style.backgroundImage = `linear-gradient(to right, rgb(255, 98, 216) ${Math.trunc(Number(obj.speed)/200*100)}%, white ${Math.trunc(Number(obj.speed)/200*100)}%)`;
 }
+
+
+
+
+
+
 
 
 
@@ -190,14 +231,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const filter = document.querySelector(".hover-button");
   const option = document.querySelector('.filter-options')
 
-  filter.addEventListener("mouseenter", () => {
-    option.style.display = "flex";
-  })
 
-  option.addEventListener("mouseleave", () => {
-    option.style.display = "none";
+  filter.addEventListener("click", () => {
+    if (option.style.display === "none") {
+      option.style.display = "flex";
+    } else {
+      option.style.display = "none";
+    }
   })
- 
 });
 
 
@@ -227,38 +268,46 @@ function filter() {
   count.innerText = `${reqs.length} filters active`;
 
 
-  while(filter.length < 24 && filterIndex < pokemon.length-1) {
-    if (value) { //if using searchbar
-      if (pokemon[filterIndex].name.toLowerCase().includes(value)) {
-        filter.push(pokemon[filterIndex]);
-      }  
-    } else if (reqs.length > 0) {
-      var valid = true;
+
+  var filteredElements = pokemon.filter((obj) => {
+    if (value) {
+      console.log(obj.name, value);
+      return (obj.name.toLowerCase().includes(value));
+    } else {
       for(var i = 0; i < reqs.length;i++) {
         const [key,val] = reqs[i];
-        if (pokemon[filterIndex].type1 !== val && pokemon[filterIndex].type2 !== val && pokemon[filterIndex][key] !== val) {
-          valid = false;
-          break;
+        if ((obj.type1 !== val && obj.type2 !== val && obj[key] !== val)) {
+          return false;
         }
       }
-      
-      if (valid) {
-        filter.push(pokemon[filterIndex]);
-      }
-    } else {
-      filter.push(pokemon[filterIndex]);
+      return true;
     }
-    filterIndex++;
+  });
+
+  console.log(filteredElements);
+  if (reqs.length === 0 && !value) {
+    document.getElementById("result-count").innerText = `${pokemon.length-1} results`;
+    filter.push(...pokemon.slice(filterIndex,filterIndex+24));
+  } else if (value) {
+
+    document.getElementById("result-count").innerText = `${filteredElements.length} results`;
+    filter.push(...filteredElements.slice(filterIndex-1,filterIndex+23));  
+  } else {
+    document.getElementById("result-count").innerText = `${filteredElements.length} results`;
+    filter.push(...filteredElements.slice(filterIndex-1,filterIndex+23));
   }
+  filterIndex+=24;
+
+
 
 
   const cardContainer = document.getElementById("card-container");
-
   const templateCard = document.querySelector(".card");
-  
+ 
   filter.forEach((obj) => {
     const wrapper = document.createElement("div");
     wrapper.classList.add("card-wrapper");
+
 
     const nextCard = templateCard.cloneNode(true); // Copy the template card
     editCardContent(nextCard, obj); // Edit title and image
@@ -269,13 +318,20 @@ function filter() {
 
 
 
+
+
+
 //calls function to load pokemon.csv data then runs intial card setup
 async function showCards() {
   if (pokemon.length == 0) {
     await loadCSVData();
+    pokemon.pop();
   }
   filter();
 }
+
+
+
 
 
 
@@ -288,31 +344,36 @@ chip.forEach((button) => {
     document.getElementById("card-container").innerHTML = "";
     if (button.classList.contains("active")) {
 
+
       if (button.dataset.name != "generation" && button.dataset.name != "is_legendary") {
         document.querySelector(`.${button.dataset.value}`).style.background = typeBackgrounds[button.dataset.value];
-      } 
+      }
       reqs.push([button.dataset.name,button.dataset.value]);
-      console.log(reqs);
     } else {
+
 
       if (button.dataset.name != "generation" && button.dataset.name != "is_legendary") {
         document.querySelector(`.${button.dataset.value}`).style.background = "rgb(50, 50, 50)";
       }
 
+
       for(var i = 0 ; i < reqs.length; i++) {
-        console.log(reqs[i][0]=== button.dataset.name, reqs[i][1]=== button.dataset.value);
+       
         if ((reqs[i][0] === button.dataset.name) && (reqs[i][1] === button.dataset.value)) {
-          console.log(reqs[i]);
           reqs.splice(i,1);
           break;
         }
       }
 
 
+
+
     }
     filter();
   })
 })
+
+
 
 
 //clears required filteres in search
@@ -330,3 +391,5 @@ function clearFilters() {
   filterIndex = 1;
   filter();
 }
+
+

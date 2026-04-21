@@ -88,6 +88,9 @@ body {
   height: clamp(250px, 25vw, 310px);
 }
 
+
+
+
 .card {
   width: 100%;
   border: rgb(255, 255, 255) solid 3px;
@@ -104,6 +107,16 @@ body {
   left: 0;
   right: 0;
   z-index: 1;
+  background: #111111;
+
+}
+
+
+.title {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  width:100%;
 }
 
 .card:hover {
@@ -367,4 +380,11 @@ body {
 .shop a:hover {
   background:rgb(192, 192, 192);
   opacity:.75;
+}
+
+
+.filter h1 {
+  color:white;
+  position:absolute;
+  left:1.5%;
 }

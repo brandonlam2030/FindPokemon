@@ -20,6 +20,7 @@
       </nav>
     </header>
     <div class = "filter">
+      <h1 id = "result-count">result count</h1>
       <input type = "text" class = "search-box" id = "search-bar" placeholder = "Search" autocomplete = "off">
       <button class = "hover-button"><img src = "assets/filter-solid.png" style = "height:100%; width:30%; background:transparent"/>Filters</button>
       <div class="filter-options">
@@ -82,7 +83,10 @@
     <div id="card-container"></div>
     <div class="card" style="display: none">
       <div class="card-content">
-        <h2></h2>
+        <div class="title">
+          <h2></h2>
+          <h3>number</h3>
+        </div>
         <img src="" alt="TV Show Poster">
         <div class = "type">
           <div class="type1">
@@ -115,7 +119,7 @@
           </div>
         </div>
         <div class="shop">
-          <a target = "_blank" href = "https://www.tcgplayer.com/search/all/product?q=bulbasaur+&view=grid">Buy a card</a>
+          <a target = "_blank" id = "buy-link" href = "https://www.tcgplayer.com/search/all/product?q=bulbasaur+&view=grid">Buy a card</a>
         </div>
       </div>
     </div>

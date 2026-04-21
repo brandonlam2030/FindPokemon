@@ -271,7 +271,6 @@ function filter() {
 
   var filteredElements = pokemon.filter((obj) => {
     if (value) {
-      console.log(obj.name, value);
       return (obj.name.toLowerCase().includes(value));
     } else {
       for(var i = 0; i < reqs.length;i++) {
@@ -284,7 +283,7 @@ function filter() {
     }
   });
 
-  console.log(filteredElements);
+
   if (reqs.length === 0 && !value) {
     document.getElementById("result-count").innerText = `${pokemon.length-1} results`;
     filter.push(...pokemon.slice(filterIndex,filterIndex+24));
